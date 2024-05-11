@@ -1,0 +1,69 @@
+﻿@model IEnumerable<KitabKhana.Model.ViewModel.ProductViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    var status = Context.Request.Query["status"];
+}
+
+<div class="row pb-3 ">
+    <div class="d-flex justify-content-end align-items-center">
+        <div class="flex-column">
+            <li class="nav-item dropdown test" style="list-style:none">
+                <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Filter Options</a>
+                <div class="dropdown-menu searchableDropdown">
+                    <a class="dropdown-item text-secondary" asp-route-status="All">All</a>
+                    <a class="dropdown-item text-secondary" asp-route-status="Romance">Romance</a>
+                    <a class="dropdown-item text-secondary" asp-route-status="SciFi">Sci-Fi</a>
+                    <a class="dropdown-item text-secondary" asp-route-status="Thriller">Thriller</a>
+                    <a class="dropdown-item text-secondary" asp-route-status="Story">Story</a>
+                    <a class="dropdown-item text-secondary" asp-route-status="Inspirational">Inspirational</a>
+                    <a class="dropdown-item text-secondary" asp-route-status="War">War</a>
+                    <a class="dropdown-item text-secondary" asp-route-status="Novel">Light Novel</a>
+                    <a class="dropdown-item text-secondary" asp-route-status="LowToHigh">Low to High Price</a>
+                    <a class="dropdown-item text-secondary" asp-route-status="HighToLow">High to Low Price</a>
+                </div>
+            </li>
+        </div>
+    </div>
+
+    @*   <select class="form-select" id="Category" onclick ="GetCategory()" aria-label="Default select example">
+    <option selected>Category</option>
+    <option value="1">One</option>          ///failed////
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+    </select> *@
+
+    @foreach (var product in Model)
+    {
+        <div class="col-lg-3 col-md-6">
+            <div class="row p-2">
+                <div class="col-12 p-1" style="border:1px  #008cba; border-radius :5px; ">
+                    <div class="card" style="width:300px">
+                        <img src="@product.ImageUrl" class="card-img-top rounded" height="400px" />
+                        <div class="card-body">
+                            <div class="pl-1">
+                                <p class="card-title h5 text-primary" id="title">@product.Title</p>
+                                <p class="card-title h5 text-info">@product.Author</p>
+                            </div>
+                            <div class="pl-1">
+                                <p> List Price :<strike><b>$@product.ListPrice.ToString("0.00")</b></strike></p>
+                            </div>
+                            <div class="pl-1">
+                                <p> as low as :<b>$@product.Price100.ToString("0.00")</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a asp-action="Details" class="btn btn-success form-control" asp-route-productId="@product.Id"> Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script src="~/js/CustomJquery.js"></script>
+
+}

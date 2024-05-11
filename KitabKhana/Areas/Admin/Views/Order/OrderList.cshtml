@@ -1,0 +1,93 @@
+﻿@model IEnumerable<KitabKhana.Model.ViewModel.OrderViewModel>
+@{
+    ViewData["Title"] = "OrderList";
+
+    var status = Context.Request.Query["status"];
+    var inprocess = "text-success";
+    var pending = "text-success";
+    var completed = "text-success";
+    var approved = "text-success";
+    var all = "text-all";
+
+    switch (status)
+    {
+        case "inprocess":
+            inprocess = "active text-danger";
+            break;
+
+        case "pending":
+            pending = "active text-success";
+            break;
+
+        case "complete":
+            completed = "active text-success";
+            break;
+
+        case "approved":
+            approved = "active text-success";
+            break;
+
+        case "all":
+            all = "active text-success";
+            break;
+
+
+    }
+}
+
+
+<div class="container p-3">
+    <div class="d-flex justify-content-between pt-4">
+        <div class="p-2">
+            <h2 class="text-dark">Order List</h2>
+        </div>
+        <div class="p-2">
+            <ul class="list-group list-group-horizontal-sm">
+               <a style="text-decoration:none;" asp-controller="Order" asp-action="OrderList" asp-route-status="pending">
+                   <li class="list-group-item btn-outline-success" @pending>Pending</li>
+               </a>
+                <a style="text-decoration:none;" asp-controller="Order" asp-action="OrderList" asp-route-status="inprocess">
+                <li class="list-group-item btn-outline-success" @inprocess>In Process</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Order" asp-action="OrderList" asp-route-status="completed">
+                <li class="list-group-item btn-outline-success" @completed>Completed</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Order" asp-action="OrderList" asp-route-status="approved">
+                <li class="list-group-item btn-outline-success" @approved>Approved</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Order" asp-action="OrderList" asp-route-status="all">
+                <li class="list-group-item btn-outline-success" @all>All</li>
+                </a>
+
+            </ul>
+        </div>
+
+    </div>
+
+    <br />
+    <br />
+
+
+    <table id="tblProduct" class="table table-bordered table-striped" style="width:100%">
+        <thead>        
+            <tr>
+                <th class="text-dark">Id</th>
+                <th class="text-dark">Name</th>
+                <th class="text-dark">Phone Number</th>
+                <th class="text-dark">Email</th>
+                <th class="text-dark">Order Status</th>
+                <th class="text-dark">Order Total</th>
+              
+                <th></th>
+            </tr>
+
+        </thead>
+
+
+    </table>
+
+</div>
+
+@section scripts{
+    <script src="~/js/OrderList.js"></script>
+}
