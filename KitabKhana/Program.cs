@@ -30,7 +30,7 @@ builder.Services.AddIdentity<IdentityUser , IdentityRole>(options => options.Sig
 builder.Services.AddScoped<iUnitOfWork , UnitOfWork>();
 builder.Services.AddTransient<CartViewComponent>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
-//builder.Services.AddScoped<IDbInitialiser, DbInitialiser>();
+builder.Services.AddScoped<IDbInitialiser, DbInitialiser>();
 builder.Services.AddScoped<ProductConverter>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -64,7 +64,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 Stripe.StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<String>();
-//seedDatabase();
+seedDatabase();
 app.UseAuthentication();;
 
 app.UseAuthorization();
@@ -78,11 +78,11 @@ app.MapControllerRoute(
 app.Run();
 
 
-//void seedDatabase()
-//{
-//    using (var scope = app.Services.CreateScope())
-//    {
-//        var dbIntializer = scope.ServiceProvider.GetRequiredService<IDbInitialiser>();
-//        dbIntializer.Initialise();
-//    }
-//}
+void seedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbIntializer = scope.ServiceProvider.GetRequiredService<IDbInitialiser>();
+        dbIntializer.Initialise();
+    }
+}
